@@ -13,6 +13,7 @@ export class EditTaskComponent implements OnInit {
 
   @ViewChild("formTask") formTask!: NgForm;
   task!: Task;
+  id : number | undefined;
 
   constructor(private taskService: TaskService, private route: ActivatedRoute, private router: Router){
 
@@ -20,12 +21,12 @@ export class EditTaskComponent implements OnInit {
 
   ngOnInit(): void {
 
-    let id = +this.route.snapshot.params['id'];
-    const res = this.taskService.findById(id);
+    this.id = +this.route.snapshot.params['id'];
+    const res = this.taskService.findById(this.id);
     if(res !== undefined)
       this.task = res;
     else
-      throw new Error (" Task not found: id = " + id);
+      throw new Error (" Task not found: id = " + this.id);
   }
 
   updateTask(){
